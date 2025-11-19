@@ -7,36 +7,43 @@
             font-family: Arial, sans-serif;
             background: #f0f2f5;
             margin:0;
-            padding:20px;
+            padding:10px;
         }
         .header{
-            font-size: 26px;
+            font-size: 28px;
             font-weight: bold;
             margin-bottom: 20px;
+            text-align: center;
         }
         .card{
             background: white;
             padding: 20px;
             margin-bottom: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            border-radius: 12px;
+            box-shadow: 0 0 12px rgba(0,0,0,0.1);
         }
         button{
-            padding: 10px 20px;
-            margin:5px;
+            padding: 15px 20px;
+            margin:8px;
             border:none;
-            border-radius:5px;
+            border-radius:8px;
             background:#007bff;
             color:white;
             cursor:pointer;
+            font-size: 16px;
+            flex: 1;
         }
         button:hover{
             background:#0056b3;
         }
         input{
-            width: 95%;
-            padding:10px;
-            margin:5px 0;
+            width: 100%;
+            padding:14px;
+            margin:8px 0;
+            font-size: 16px;
+            box-sizing: border-box;
+            border-radius:5px;
+            border:1px solid #ccc;
         }
         .hidden{display:none;}
         table{
@@ -48,12 +55,39 @@
             border:1px solid #ccc;
         }
         th, td{
-            padding:8px;
+            padding:12px;
             text-align:left;
+            font-size: 16px;
         }
         th{
             background:#007bff;
             color:white;
+        }
+
+        /* Flex grid for buttons */
+        .button-grid{
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 600px) {
+            .button-grid{
+                flex-direction: row;
+            }
+            button{
+                margin:5px 0;
+            }
+            table th, table td{
+                font-size: 14px;
+                padding:8px;
+            }
+        }
+
+        /* Scrollable table on small screens */
+        .table-container{
+            overflow-x:auto;
         }
     </style>
 </head>
@@ -68,17 +102,21 @@
     </div>
 
     <div class="card" id="homeButtons">
-        <button onclick="showPasswordPrompt('donation')">অনুদান যোগ করুন</button>
-        <button onclick="showPasswordPrompt('expense')">খরচ যোগ করুন</button>
-        <button onclick="showPage('donationList')">অনুদানের হিসাব</button>
-        <button onclick="showPage('expenseList')">খরচের হিসাব</button>
+        <div class="button-grid">
+            <button onclick="showPasswordPrompt('donation')">অনুদান যোগ করুন</button>
+            <button onclick="showPasswordPrompt('expense')">খরচ যোগ করুন</button>
+            <button onclick="showPage('donationList')">অনুদানের হিসাব</button>
+            <button onclick="showPage('expenseList')">খরচের হিসাব</button>
+        </div>
     </div>
 
     <!-- Password Prompt -->
     <div class="card hidden" id="passwordDiv">
         <input type="password" id="passwordInput" placeholder="পাসওয়ার্ড লিখুন">
-        <button onclick="checkPassword()">সাবমিট</button>
-        <button onclick="cancelPassword()">বাতিল</button>
+        <div class="button-grid">
+            <button onclick="checkPassword()">সাবমিট</button>
+            <button onclick="cancelPassword()">বাতিল</button>
+        </div>
     </div>
 
     <!-- Donation Form -->
@@ -87,8 +125,10 @@
         <input id="donorName" placeholder="দাতার নাম">
         <input id="donorPhone" placeholder="ঠিকানা">
         <input id="donorAmount" placeholder="টাকার পরিমাণ">
-        <button onclick="submitDonation()">সাবমিট</button>
-        <button onclick="backHome()">Back</button>
+        <div class="button-grid">
+            <button onclick="submitDonation()">সাবমিট</button>
+            <button onclick="backHome()">Back</button>
+        </div>
     </div>
 
     <!-- Expense Form -->
@@ -97,28 +137,33 @@
         <input id="expensePurpose" placeholder="কোন কাজে খরচ">
         <input id="expenseBy" placeholder="কার মাধ্যমে">
         <input id="expenseAmount" placeholder="টাকার পরিমাণ">
-        <button onclick="submitExpense()">সাবমিট</button>
-        <button onclick="backHome()">Back</button>
+        <div class="button-grid">
+            <button onclick="submitExpense()">সাবমিট</button>
+            <button onclick="backHome()">Back</button>
+        </div>
     </div>
 
     <!-- Donation List -->
     <div class="card hidden" id="donationList">
         <div class="header">অনুদানের হিসাব</div>
-        <table id="donationTable">
-            <tr><th>Name</th><th>Address</th><th>Amount</th></tr>
-        </table>
+        <div class="table-container">
+            <table id="donationTable">
+                <tr><th>Name</th><th>Address</th><th>Amount</th></tr>
+            </table>
+        </div>
         <button onclick="backHome()">Back</button>
     </div>
 
     <!-- Expense List -->
     <div class="card hidden" id="expenseList">
         <div class="header">খরচের হিসাব</div>
-        <table id="expenseTable">
-            <tr><th>Purpose</th><th>By</th><th>Amount</th></tr>
-        </table>
+        <div class="table-container">
+            <table id="expenseTable">
+                <tr><th>Purpose</th><th>By</th><th>Amount</th></tr>
+            </table>
+        </div>
         <button onclick="backHome()">Back</button>
     </div>
-
 
 <script>
 const DONATION_API = "https://691c4c4e3aaeed735c90492a.mockapi.io/donations";
@@ -221,7 +266,7 @@ function loadDonationList(){
     .then(res=>res.json())
     .then(data=>{
         const table = document.getElementById("donationTable");
-        table.innerHTML = "<tr><th>Name</th><th>address</th><th>Amount</th></tr>";
+        table.innerHTML = "<tr><th>Name</th><th>Address</th><th>Amount</th></tr>";
         let total = 0;
         data.forEach(d=>{
             const row = table.insertRow();
@@ -276,8 +321,8 @@ function updateBalance(){
 
 // Initial load
 loadTotals();
-
 </script>
 
 </body>
 </html>
+
