@@ -2,18 +2,34 @@
 <html>
 <head>
     <title>Donation & Expense Management</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
         body{
             font-family: Arial, sans-serif;
-            background: #f0f2f5;
+            background: #dce5f3;
             margin:0;
             padding:10px;
         }
         .header{
-            font-size: 28px;
+            font-size: 20px;
             font-weight: bold;
             margin-bottom: 20px;
             text-align: center;
+            width: 95%;
+            height: auto;
+        }
+        .ayt{
+            margin: 0 auto;
+            font-size: 10px;
+            width: 95%;
+            height: auto;
+            background-color: white;
+            margin-bottom: 20px;
+            border-radius: 12px;  
+            padding: 10px;          
+        }
+        .ayt h1{
+            text-align: right;
         }
         .card{
             background: white;
@@ -24,7 +40,6 @@
         }
         button{
             padding: 15px 20px;
-            margin:8px;
             border:none;
             border-radius:8px;
             background:#007bff;
@@ -64,45 +79,79 @@
             color:white;
         }
 
-        /* Flex grid for buttons */
         .button-grid{
             display: flex;
             flex-wrap: wrap;
             justify-content: space-between;
+            gap:10px;
+        }
+        .button-grid button{
+            width:48%;
+        }
+        .password-buttons{
+            justify-content: flex-start;
+            gap:10px;
+        }
+        .totals{
+            text-align: center;
+            font-size: 20px;
+            margin-bottom: 20px;
         }
 
-        /* Responsive adjustments */
+        .table-container{
+            overflow-x:auto;
+        }
+
         @media (max-width: 600px) {
-            .button-grid{
-                flex-direction: row;
+            .button-grid-h{
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
             }
-            button{
-                margin:5px 0;
+            .button-grid-h button{
+                width:100%;
+                height: 100px;
+            }
+            .button-grid button{
+                width:100%;
             }
             table th, table td{
                 font-size: 14px;
                 padding:8px;
             }
-        }
-
-        /* Scrollable table on small screens */
-        .table-container{
-            overflow-x:auto;
+            .totals{
+                font-size: 18px;
+            }
         }
     </style>
 </head>
 <body>
 
-    <div class="header">Donation & Expense Dashboard</div>
+    <div class="header">
+        <h1>“মাহফিলের সব হিসাব এক ক্লিকে”</h1>
+        <h4>সহজে হিসাব রাখুন, সময় বাঁচান, ঝামেলা কমান</h4>
+    </div>
 
-    <div class="card">
+    <div class="card totals">
         <p>মোট অনুদান: <span id="totalDonation">0</span> টাকা</p>
         <p>মোট খরচ: <span id="totalExpense">0</span> টাকা</p>
-        <p><b>Balance:</b> <span id="balance">0</span> টাকা</p>
+        <p>বর্তমান ক্যাশ আছে:<span id="balance">0</span> টাকা</p>
+    </div>
+
+    <div class="ayt">
+        <h1>وَمَا تُنفِقُوا مِنْ خَيْرٍ فَلِأَنْفُسِكُمْ</h1>
+        <h2>আপনি যা দান করবেন, তা আপনার নিজের জন্যই।</h2>
+        <p>সূরা বাকারা, আয়াত 272</p>
+    </div>
+
+    <div class="ayt"> 
+        <h1>الْيَدُ الْعُلْيَا خَيْرٌ مِنَ الْيَدِ السُّفْلَى وَالْيَدُ الْعُلْيَا الْمُنْفِقَةُ وَالسُّفْلَى السَّائِلَةُ </h1> 
+        <h2>উপরের হাত নীচের হাতের চেয়ে উত্তম। উপরের হাত হলো দানকারী। আর নীচের হাত হলো দান গ্রহণকারী। </h2> 
+        <p>সাহিহ মুসলিম, হাদিস নং 1033</p> 
     </div>
 
     <div class="card" id="homeButtons">
-        <div class="button-grid">
+        <div class="button-grid button-grid-h">
             <button onclick="showPasswordPrompt('donation')">অনুদান যোগ করুন</button>
             <button onclick="showPasswordPrompt('expense')">খরচ যোগ করুন</button>
             <button onclick="showPage('donationList')">অনুদানের হিসাব</button>
@@ -110,16 +159,14 @@
         </div>
     </div>
 
-    <!-- Password Prompt -->
     <div class="card hidden" id="passwordDiv">
         <input type="password" id="passwordInput" placeholder="পাসওয়ার্ড লিখুন">
-        <div class="button-grid">
+        <div class="button-grid password-buttons">
             <button onclick="checkPassword()">সাবমিট</button>
             <button onclick="cancelPassword()">বাতিল</button>
         </div>
     </div>
 
-    <!-- Donation Form -->
     <div class="card hidden" id="donationFormDiv">
         <div class="header">অনুদান যোগ করুন</div>
         <input id="donorName" placeholder="দাতার নাম">
@@ -131,7 +178,6 @@
         </div>
     </div>
 
-    <!-- Expense Form -->
     <div class="card hidden" id="expenseFormDiv">
         <div class="header">খরচ যোগ করুন</div>
         <input id="expensePurpose" placeholder="কোন কাজে খরচ">
@@ -143,7 +189,6 @@
         </div>
     </div>
 
-    <!-- Donation List -->
     <div class="card hidden" id="donationList">
         <div class="header">অনুদানের হিসাব</div>
         <div class="table-container">
@@ -154,7 +199,6 @@
         <button onclick="backHome()">Back</button>
     </div>
 
-    <!-- Expense List -->
     <div class="card hidden" id="expenseList">
         <div class="header">খরচের হিসাব</div>
         <div class="table-container">
@@ -167,7 +211,7 @@
 
 <script>
 const DONATION_API = "https://691c4c4e3aaeed735c90492a.mockapi.io/donations";
-const EXPENSE_API = "https://691c4c4e3aaeed735c90492a.mockapi.io/expenses";
+const EXPENSE_API = "https://691c4c4e3aaeed735c90492a.mockapi.io/expense";
 
 const PASSWORD = "ss21";
 let currentForm = "";
@@ -319,10 +363,8 @@ function updateBalance(){
     document.getElementById("balance").innerText = totalDonation - totalExpense;
 }
 
-// Initial load
 loadTotals();
 </script>
 
 </body>
 </html>
-
