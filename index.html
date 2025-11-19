@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Donation & Expense Management</title>
+    <style>
+        body{
+            font-family: Arial, sans-serif;
+            background: #f0f2f5;
+            margin:0;
+            padding:20px;
+        }
+        .header{
+            font-size: 26px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        .card{
+            background: white;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        button{
+            padding: 10px 20px;
+            margin:5px;
+            border:none;
+            border-radius:5px;
+            background:#007bff;
+            color:white;
+            cursor:pointer;
+        }
+        button:hover{
+            background:#0056b3;
+        }
+        input{
+            width: 95%;
+            padding:10px;
+            margin:5px 0;
+        }
+        .hidden{display:none;}
+        table{
+            width:100%;
+            border-collapse: collapse;
+            margin-top:10px;
+        }
+        table, th, td{
+            border:1px solid #ccc;
+        }
+        th, td{
+            padding:8px;
+            text-align:left;
+        }
+        th{
+            background:#007bff;
+            color:white;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">Donation & Expense Dashboard</div>
+
+    <div class="card">
+        <p>মোট অনুদান: <span id="totalDonation">0</span> টাকা</p>
+        <p>মোট খরচ: <span id="totalExpense">0</span> টাকা</p>
+        <p><b>Balance:</b> <span id="balance">0</span> টাকা</p>
+    </div>
+
+    <div class="card" id="homeButtons">
+        <button onclick="showPasswordPrompt('donation')">অনুদান যোগ করুন</button>
+        <button onclick="showPasswordPrompt('expense')">খরচ যোগ করুন</button>
+        <button onclick="showPage('donationList')">অনুদানের হিসাব</button>
+        <button onclick="showPage('expenseList')">খরচের হিসাব</button>
+    </div>
+
+    <!-- Password Prompt -->
+    <div class="card hidden" id="passwordDiv">
+        <input type="password" id="passwordInput" placeholder="পাসওয়ার্ড লিখুন">
+        <button onclick="checkPassword()">সাবমিট</button>
+        <button onclick="cancelPassword()">বাতিল</button>
+    </div>
+
+    <!-- Donation Form -->
+    <div class="card hidden" id="donationFormDiv">
+        <div class="header">অনুদান যোগ করুন</div>
+        <input id="donorName" placeholder="দাতার নাম">
+        <input id="donorPhone" placeholder="ঠিকানা">
+        <input id="donorAmount" placeholder="টাকার পরিমাণ">
+        <button onclick="submitDonation()">সাবমিট</button>
+        <button onclick="backHome()">Back</button>
+    </div>
+
+    <!-- Expense Form -->
+    <div class="card hidden" id="expenseFormDiv">
+        <div class="header">খরচ যোগ করুন</div>
+        <input id="expensePurpose" placeholder="কোন কাজে খরচ">
+        <input id="expenseBy" placeholder="কার মাধ্যমে">
+        <input id="expenseAmount" placeholder="টাকার পরিমাণ">
+        <button onclick="submitExpense()">সাবমিট</button>
+        <button onclick="backHome()">Back</button>
+    </div>
+
+    <!-- Donation List -->
+    <div class="card hidden" id="donationList">
+        <div class="header">অনুদানের হিসাব</div>
+        <table id="donationTable">
+            <tr><th>Name</th><th>Address</th><th>Amount</th></tr>
+        </table>
+        <button onclick="backHome()">Back</button>
+    </div>
+
+    <!-- Expense List -->
+    <div class="card hidden" id="expenseList">
+        <div class="header">খরচের হিসাব</div>
+        <table id="expenseTable">
+            <tr><th>Purpose</th><th>By</th><th>Amount</th></tr>
+        </table>
+        <button onclick="backHome()">Back</button>
+    </div>
+
+
+<script>
+const DONATION_API = "https://691c4c4e3aaeed735c90492a.mockapi.io/donations";
+const EXPENSE_API = "https://691c4c4e3aaeed735c90492a.mockapi.io/expenses";
+
+const PASSWORD = "ss21";
+let currentForm = "";
+
+function showPasswordPrompt(form){
+    currentForm = form;
+    document.getElementById("homeButtons").classList.add("hidden");
+    document.getElementById("passwordDiv").classList.remove("hidden");
+}
+
+function checkPassword(){
+    const pass = document.getElementById("passwordInput").value;
+    if(pass === PASSWORD){
+        document.getElementById("passwordDiv").classList.add("hidden");
+        document.getElementById("passwordInput").value = "";
+        if(currentForm === "donation"){
+            document.getElementById("donationFormDiv").classList.remove("hidden");
+        }else{
+            document.getElementById("expenseFormDiv").classList.remove("hidden");
+        }
+    }else{
+        alert("পাসওয়ার্ড ভুল!");
+    }
+}
+
+function cancelPassword(){
+    document.getElementById("passwordDiv").classList.add("hidden");
+    document.getElementById("passwordInput").value = "";
+    document.getElementById("homeButtons").classList.remove("hidden");
+}
+
+function backHome(){
+    document.getElementById("donationFormDiv").classList.add("hidden");
+    document.getElementById("expenseFormDiv").classList.add("hidden");
+    document.getElementById("donationList").classList.add("hidden");
+    document.getElementById("expenseList").classList.add("hidden");
+    document.getElementById("homeButtons").classList.remove("hidden");
+    loadTotals();
+}
+
+function submitDonation(){
+    const name = document.getElementById("donorName").value;
+    const phone = document.getElementById("donorPhone").value;
+    const amount = Number(document.getElementById("donorAmount").value) || 0;
+
+    if(!name || !phone || !amount){ alert("সব তথ্য পূরণ করুন"); return;}
+
+    fetch(DONATION_API,{
+        method:"POST",
+        headers:{"Content-Type":"application/json"},
+        body:JSON.stringify({name, phone, amount})
+    }).then(res=>res.json())
+      .then(data=>{
+        alert("অনুদান যোগ হয়েছে!");
+        document.getElementById("donorName").value="";
+        document.getElementById("donorPhone").value="";
+        document.getElementById("donorAmount").value="";
+        backHome();
+    });
+}
+
+function submitExpense(){
+    const purpose = document.getElementById("expensePurpose").value;
+    const by = document.getElementById("expenseBy").value;
+    const amount = Number(document.getElementById("expenseAmount").value) || 0;
+
+    if(!purpose || !by || !amount){ alert("সব তথ্য পূরণ করুন"); return;}
+
+    fetch(EXPENSE_API,{
+        method:"POST",
+        headers:{"Content-Type":"application/json"},
+        body:JSON.stringify({purpose, by, amount})
+    }).then(res=>res.json())
+      .then(data=>{
+        alert("খরচ যোগ হয়েছে!");
+        document.getElementById("expensePurpose").value="";
+        document.getElementById("expenseBy").value="";
+        document.getElementById("expenseAmount").value="";
+        backHome();
+    });
+}
+
+function showPage(page){
+    document.getElementById("homeButtons").classList.add("hidden");
+    if(page === "donationList"){
+        document.getElementById("donationList").classList.remove("hidden");
+        loadDonationList();
+    }else{
+        document.getElementById("expenseList").classList.remove("hidden");
+        loadExpenseList();
+    }
+}
+
+function loadDonationList(){
+    fetch(DONATION_API)
+    .then(res=>res.json())
+    .then(data=>{
+        const table = document.getElementById("donationTable");
+        table.innerHTML = "<tr><th>Name</th><th>address</th><th>Amount</th></tr>";
+        let total = 0;
+        data.forEach(d=>{
+            const row = table.insertRow();
+            row.insertCell(0).innerText = d.name;
+            row.insertCell(1).innerText = d.phone;
+            row.insertCell(2).innerText = d.amount;
+            total += Number(d.amount);
+        });
+        document.getElementById("totalDonation").innerText = total;
+        updateBalance();
+    });
+}
+
+function loadExpenseList(){
+    fetch(EXPENSE_API)
+    .then(res=>res.json())
+    .then(data=>{
+        const table = document.getElementById("expenseTable");
+        table.innerHTML = "<tr><th>Purpose</th><th>By</th><th>Amount</th></tr>";
+        let total = 0;
+        data.forEach(d=>{
+            const row = table.insertRow();
+            row.insertCell(0).innerText = d.purpose;
+            row.insertCell(1).innerText = d.by;
+            row.insertCell(2).innerText = d.amount;
+            total += Number(d.amount);
+        });
+        document.getElementById("totalExpense").innerText = total;
+        updateBalance();
+    });
+}
+
+function loadTotals(){
+    Promise.all([
+        fetch(DONATION_API).then(res=>res.json()),
+        fetch(EXPENSE_API).then(res=>res.json())
+    ])
+    .then(([donations, expenses])=>{
+        let totalDonation = donations.reduce((a,b)=>a+Number(b.amount),0);
+        let totalExpense = expenses.reduce((a,b)=>a+Number(b.amount),0);
+        document.getElementById("totalDonation").innerText = totalDonation;
+        document.getElementById("totalExpense").innerText = totalExpense;
+        updateBalance();
+    });
+}
+
+function updateBalance(){
+    const totalDonation = Number(document.getElementById("totalDonation").innerText);
+    const totalExpense = Number(document.getElementById("totalExpense").innerText);
+    document.getElementById("balance").innerText = totalDonation - totalExpense;
+}
+
+// Initial load
+loadTotals();
+
+</script>
+
+</body>
+</html>
