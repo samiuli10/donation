@@ -4,6 +4,51 @@
     <title>Donation & Expense Management</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
+ .cardd{
+    width: 90%;
+    height: 230px;
+    background: hsl(214, 35%, 67%);
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+}
+
+
+/* BEFORE = rotating colorful circle */
+.cardd::before{
+    content: "";
+    position: absolute;
+    width: 50%;
+    height: 180%;
+    background: linear-gradient(180deg, #ea00ff, #04ff64);
+    animation: rotate 3s linear infinite;
+
+}
+
+/* AFTER = inner layer */
+.cardd::after{
+    content: "";
+    position: absolute;
+    inset: 5px;
+    background: #07182E;
+    border-radius: 15px;
+    z-index: 1;
+}
+
+
+/* Rotation Animation */
+@keyframes rotate{
+    from{
+        transform: rotate(0deg);
+    }
+    to{
+        transform: rotate(360deg);
+    }
+}
+
         body{
             font-family: Arial, sans-serif;
             background: #dce5f3;
@@ -32,24 +77,32 @@
             text-align: right;
         }
         .card{
-            background: white;
+            background: rgb(255, 255, 255);
             padding: 20px;
+            display: flex;
+            flex-direction: column; 
             margin-bottom: 20px;
             border-radius: 12px;
             box-shadow: 0 0 12px rgba(0,0,0,0.1);
         }
+        .card p{
+            color: #f5ebeb;
+            z-index: 2;
+            font-size: 26px;
+        }
+ 
         button{
-            padding: 15px 20px;
+            padding: 20px;
             border:none;
-            border-radius:8px;
+            border-radius:20px;
             background:#007bff;
             color:white;
             cursor:pointer;
-            font-size: 16px;
+            font-size: 26px;
             flex: 1;
         }
         button:hover{
-            background:#0056b3;
+            background:#063c77;
         }
         input{
             width: 100%;
@@ -110,7 +163,7 @@
             }
             .button-grid-h button{
                 width:100%;
-                height: 100px;
+                height: 160px;
             }
             .button-grid button{
                 width:100%;
@@ -132,30 +185,19 @@
         <h4>সহজে হিসাব রাখুন, সময় বাঁচান, ঝামেলা কমান</h4>
     </div>
 
-    <div class="card totals">
+    <div class="card totals cardd " style="background-color: #010305;">
         <p>মোট অনুদান: <span id="totalDonation">0</span> টাকা</p>
         <p>মোট খরচ: <span id="totalExpense">0</span> টাকা</p>
         <p>বর্তমান ক্যাশ আছে:<span id="balance">0</span> টাকা</p>
     </div>
 
-    <div class="ayt">
-        <h1>وَمَا تُنفِقُوا مِنْ خَيْرٍ فَلِأَنْفُسِكُمْ</h1>
-        <h2>আপনি যা দান করবেন, তা আপনার নিজের জন্যই।</h2>
-        <p>সূরা বাকারা, আয়াত 272</p>
-    </div>
-
-    <div class="ayt"> 
-        <h1>الْيَدُ الْعُلْيَا خَيْرٌ مِنَ الْيَدِ السُّفْلَى وَالْيَدُ الْعُلْيَا الْمُنْفِقَةُ وَالسُّفْلَى السَّائِلَةُ </h1> 
-        <h2>উপরের হাত নীচের হাতের চেয়ে উত্তম। উপরের হাত হলো দানকারী। আর নীচের হাত হলো দান গ্রহণকারী। </h2> 
-        <p>সাহিহ মুসলিম, হাদিস নং 1033</p> 
-    </div>
-
+ 
     <div class="card" id="homeButtons">
-        <div class="button-grid button-grid-h">
-            <button onclick="showPasswordPrompt('donation')">অনুদান যোগ করুন</button>
-            <button onclick="showPasswordPrompt('expense')">খরচ যোগ করুন</button>
-            <button onclick="showPage('donationList')">অনুদানের হিসাব</button>
-            <button onclick="showPage('expenseList')">খরচের হিসাব</button>
+        <div class="button-grid button-grid-h ">
+          <div class="card_b">  <button onclick="showPasswordPrompt('donation')">অনুদান যোগ করুন</button></div>
+          <div class="card_b">  <button onclick="showPasswordPrompt('expense')">খরচ যোগ করুন</button></div>
+          <div class="card_b">   <button onclick="showPage('donationList')">অনুদানের হিসাব</button></div>
+           <div class="card_b"><button onclick="showPage('expenseList')">খরচের হিসাব</button></div>
         </div>
     </div>
 
@@ -213,7 +255,7 @@
 const DONATION_API = "https://691c4c4e3aaeed735c90492a.mockapi.io/donations";
 const EXPENSE_API = "https://691c4c4e3aaeed735c90492a.mockapi.io/expense";
 
-const PASSWORD = "ss21";
+const PASSWORD = "2255";
 let currentForm = "";
 
 function showPasswordPrompt(form){
