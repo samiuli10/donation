@@ -52,8 +52,9 @@
         body{
             font-family: Arial, sans-serif;
             background: #dce5f3;
-            margin:0;
+            margin:0 auto;
             padding:10px;
+            width: 400px;
         }
         .header{
             font-size: 20px;
@@ -155,7 +156,7 @@
             overflow-x:auto;
         }
 
-        @media (max-width: 600px) {
+        /* @media (max-width: 600px) { */
             .button-grid-h{
                 display: grid;
                 grid-template-columns: repeat(2, 1fr);
@@ -175,7 +176,7 @@
             .totals{
                 font-size: 18px;
             }
-        }
+      
     </style>
 </head>
 <body>
@@ -232,6 +233,7 @@
     </div>
 
     <div class="card hidden" id="donationList">
+         <a href="list-1.html">list</a>
         <div class="header">অনুদানের হিসাব</div>
         <div class="table-container">
             <table id="donationTable">
