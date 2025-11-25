@@ -1,0 +1,19 @@
+            body{
+                font-family: Arial, sans-serif;
+                background: #cfd7e6;
+                margin:0 auto;
+                height: auto;
+            }
+            .div{
+                width: 450px;
+                margin: 0 auto;
+            }
+            img{
+                width: 100%;;
+                height: auto;
+                margin: 0 auto;
+            }
+            h1{
+                text-align: center;
+                border-bottom: 2px solid black;
+            }

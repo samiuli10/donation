@@ -16,8 +16,20 @@
     overflow: hidden;
 }
 
+.cardd p{
+    z-index: 2;
+    position: relative;
+    color: #ffffff;
+}
+.cardd::after{
+    z-index: 1;
+}
+.cardd::before{
+    z-index: 0;
+}
 
-/* BEFORE = rotating colorful circle */
+
+
 .cardd::before{
     content: "";
     position: absolute;
@@ -25,10 +37,7 @@
     height: 180%;
     background: linear-gradient(180deg, #ea00ff, #04ff64);
     animation: rotate 3s linear infinite;
-
 }
-
-/* AFTER = inner layer */
 .cardd::after{
     content: "";
     position: absolute;
@@ -37,146 +46,73 @@
     border-radius: 15px;
     z-index: 1;
 }
-
-
-/* Rotation Animation */
 @keyframes rotate{
-    from{
-        transform: rotate(0deg);
-    }
-    to{
-        transform: rotate(360deg);
-    }
+    from{ transform: rotate(0deg); }
+    to{ transform: rotate(360deg); }
 }
-
-        body{
-            font-family: Arial, sans-serif;
-            background: #dce5f3;
-            margin:0 auto;
-            padding:10px;
-            width: 400px;
-        }
-        .header{
-            font-size: 20px;
-            font-weight: bold;
-            margin-bottom: 20px;
-            text-align: center;
-            width: 95%;
-            height: auto;
-        }
-        .ayt{
-            margin: 0 auto;
-            font-size: 10px;
-            width: 95%;
-            height: auto;
-            background-color: white;
-            margin-bottom: 20px;
-            border-radius: 12px;  
-            padding: 10px;          
-        }
-        .ayt h1{
-            text-align: right;
-        }
-        .card{
-            background: rgb(255, 255, 255);
-            padding: 20px;
-            display: flex;
-            flex-direction: column; 
-            margin-bottom: 20px;
-            border-radius: 12px;
-            box-shadow: 0 0 12px rgba(0,0,0,0.1);
-        }
-        .card p{
-            color: #f5ebeb;
-            z-index: 2;
-            font-size: 26px;
-        }
- 
-        button{
-            padding: 20px;
-            border:none;
-            border-radius:20px;
-            background:#007bff;
-            color:white;
-            cursor:pointer;
-            font-size: 26px;
-            flex: 1;
-        }
-        button:hover{
-            background:#063c77;
-        }
-        input{
-            width: 100%;
-            padding:14px;
-            margin:8px 0;
-            font-size: 16px;
-            box-sizing: border-box;
-            border-radius:5px;
-            border:1px solid #ccc;
-        }
-        .hidden{display:none;}
-        table{
-            width:100%;
-            border-collapse: collapse;
-            margin-top:10px;
-        }
-        table, th, td{
-            border:1px solid #ccc;
-        }
-        th, td{
-            padding:12px;
-            text-align:left;
-            font-size: 16px;
-        }
-        th{
-            background:#007bff;
-            color:white;
-        }
-
-        .button-grid{
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            gap:10px;
-        }
-        .button-grid button{
-            width:48%;
-        }
-        .password-buttons{
-            justify-content: flex-start;
-            gap:10px;
-        }
-        .totals{
-            text-align: center;
-            font-size: 20px;
-            margin-bottom: 20px;
-        }
-
-        .table-container{
-            overflow-x:auto;
-        }
-
-        /* @media (max-width: 600px) { */
-            .button-grid-h{
-                display: grid;
-                grid-template-columns: repeat(2, 1fr);
-                gap: 10px;
-            }
-            .button-grid-h button{
-                width:100%;
-                height: 160px;
-            }
-            .button-grid button{
-                width:100%;
-            }
-            table th, table td{
-                font-size: 14px;
-                padding:8px;
-            }
-            .totals{
-                font-size: 18px;
-            }
-      
+body{
+    font-family: Arial, sans-serif;
+    background: #dce5f3;
+    margin:0 auto;
+    padding:10px;
+    width: 400px;
+}
+.header{ font-size: 20px; font-weight: bold; margin-bottom: 20px; text-align: center; width: 95%; }
+.ayt{ margin: 0 auto; font-size: 10px; width: 95%; background-color: white; margin-bottom: 20px; border-radius: 12px; padding: 10px; }
+.card{
+    background: rgb(255, 255, 255);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+    border-radius: 12px;
+    box-shadow: 0 0 12px rgba(0,0,0,0.1);
+}
+button{
+    padding: 20px;
+    border:none;
+    border-radius:20px;
+    background:#007bff;
+    color:white;
+    cursor:pointer;
+    font-size: 26px;
+}
+button:hover{ background:#063c77; }
+input{
+    width: 100%; padding:14px; margin:8px 0;
+    font-size: 16px; box-sizing: border-box;
+    border-radius:5px; border:1px solid #ccc;
+}
+.hidden{display:none;}
+table{
+    width:100%;
+    border-collapse: collapse;
+    margin-top:10px;
+}
+table, th, td{ border:1px solid #ccc; }
+th, td{ padding:12px; text-align:left; font-size: 16px; }
+th{ background:#007bff; color:white; }
+.button-grid{ display: flex; flex-wrap: wrap; justify-content: space-between; gap:10px; }
+.button-grid button{ width:48%; }
+.button-grid-h{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+}
+.button-grid-h button{
+    width:100%;
+    height: 160px;
+}
+.list{
+    text-decoration: none; 
+    color: #ffffff; 
+    background-color: #007bff; 
+    padding: 5px; 
+    width: 60px;
+    text-align: center;
+    margin-bottom: 4px;
+    border-radius: 5px;
+}
     </style>
 </head>
 <body>
@@ -186,25 +122,24 @@
         <h4>সহজে হিসাব রাখুন, সময় বাঁচান, ঝামেলা কমান</h4>
     </div>
 
-    <div class="card totals cardd " style="background-color: #010305;">
-        <p>মোট অনুদান: <span id="totalDonation">0</span> টাকা</p>
+    <div class="card totals cardd" style="background-color: #010305; ">
+        <p >মোট অনুদান: <span id="totalDonation">0</span> টাকা</p>
         <p>মোট খরচ: <span id="totalExpense">0</span> টাকা</p>
         <p>বর্তমান ক্যাশ আছে:<span id="balance">0</span> টাকা</p>
     </div>
 
- 
     <div class="card" id="homeButtons">
-        <div class="button-grid button-grid-h ">
-          <div class="card_b">  <button onclick="showPasswordPrompt('donation')">অনুদান যোগ করুন</button></div>
-          <div class="card_b">  <button onclick="showPasswordPrompt('expense')">খরচ যোগ করুন</button></div>
-          <div class="card_b">   <button onclick="showPage('donationList')">অনুদানের হিসাব</button></div>
-           <div class="card_b"><button onclick="showPage('expenseList')">খরচের হিসাব</button></div>
+        <div class="button-grid button-grid-h">
+            <button onclick="showPasswordPrompt('donation')">অনুদান যোগ করুন</button>
+            <button onclick="showPasswordPrompt('expense')">খরচ যোগ করুন</button>
+            <button onclick="showPage('donationList')">অনুদানের হিসাব</button>
+            <button onclick="showPage('expenseList')">খরচের হিসাব</button>
         </div>
     </div>
 
     <div class="card hidden" id="passwordDiv">
         <input type="password" id="passwordInput" placeholder="পাসওয়ার্ড লিখুন">
-        <div class="button-grid password-buttons">
+        <div class="button-grid">
             <button onclick="checkPassword()">সাবমিট</button>
             <button onclick="cancelPassword()">বাতিল</button>
         </div>
@@ -233,30 +168,39 @@
     </div>
 
     <div class="card hidden" id="donationList">
-         <a href="list-1.html">list</a>
+        <a href="list-1.html" class="list">List 1</a>
+        <a href="list-2.html" class="list">List 2</a>
+        <a href="list-3.html" class="list">List 3</a>
         <div class="header">অনুদানের হিসাব</div>
         <div class="table-container">
             <table id="donationTable">
-                <tr><th>Name</th><th>Address</th><th>Amount</th></tr>
+                <tr><th>SL</th><th>Name</th><th>Address</th><th>Amount</th></tr>
             </table>
         </div>
-        <button onclick="backHome()">Back</button>
+        <div style="margin-top:10px; display:flex; gap:10px;">
+            <button onclick="downloadDonationPNG()">ডাউনলোড</button>
+            <button onclick="backHome()">Back</button>
+        </div>
     </div>
 
     <div class="card hidden" id="expenseList">
         <div class="header">খরচের হিসাব</div>
         <div class="table-container">
             <table id="expenseTable">
-                <tr><th>Purpose</th><th>By</th><th>Amount</th></tr>
+                <tr><th>SL</th><th>Purpose</th><th>By</th><th>Amount</th></tr>
             </table>
         </div>
-        <button onclick="backHome()">Back</button>
+        <div style="margin-top:10px; display:flex; gap:10px;">
+            <button onclick="downloadExpensePNG()">ডাউনলোড</button>
+            <button onclick="backHome()">Back</button>
+        </div>
     </div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
 <script>
 const DONATION_API = "https://691c4c4e3aaeed735c90492a.mockapi.io/donations";
 const EXPENSE_API = "https://691c4c4e3aaeed735c90492a.mockapi.io/expense";
-
 const PASSWORD = "2255";
 let currentForm = "";
 
@@ -265,7 +209,6 @@ function showPasswordPrompt(form){
     document.getElementById("homeButtons").classList.add("hidden");
     document.getElementById("passwordDiv").classList.remove("hidden");
 }
-
 function checkPassword(){
     const pass = document.getElementById("passwordInput").value;
     if(pass === PASSWORD){
@@ -276,17 +219,13 @@ function checkPassword(){
         }else{
             document.getElementById("expenseFormDiv").classList.remove("hidden");
         }
-    }else{
-        alert("পাসওয়ার্ড ভুল!");
-    }
+    }else{ alert("পাসওয়ার্ড ভুল!"); }
 }
-
 function cancelPassword(){
     document.getElementById("passwordDiv").classList.add("hidden");
     document.getElementById("passwordInput").value = "";
     document.getElementById("homeButtons").classList.remove("hidden");
 }
-
 function backHome(){
     document.getElementById("donationFormDiv").classList.add("hidden");
     document.getElementById("expenseFormDiv").classList.add("hidden");
@@ -296,74 +235,61 @@ function backHome(){
     loadTotals();
 }
 
+/* SUBMIT */
 function submitDonation(){
-    const name = document.getElementById("donorName").value;
-    const phone = document.getElementById("donorPhone").value;
-    const amount = Number(document.getElementById("donorAmount").value) || 0;
-
+    const name = donorName.value;
+    const phone = donorPhone.value;
+    const amount = Number(donorAmount.value) || 0;
     if(!name || !phone || !amount){ alert("সব তথ্য পূরণ করুন"); return;}
-
     fetch(DONATION_API,{
         method:"POST",
         headers:{"Content-Type":"application/json"},
         body:JSON.stringify({name, phone, amount})
-    }).then(res=>res.json())
-      .then(data=>{
-        alert("অনুদান যোগ হয়েছে!");
-        document.getElementById("donorName").value="";
-        document.getElementById("donorPhone").value="";
-        document.getElementById("donorAmount").value="";
-        backHome();
-    });
+    }).then(()=>{ alert("অনুদান যোগ হয়েছে!"); backHome(); });
 }
 
 function submitExpense(){
-    const purpose = document.getElementById("expensePurpose").value;
-    const by = document.getElementById("expenseBy").value;
-    const amount = Number(document.getElementById("expenseAmount").value) || 0;
-
+    const purpose = expensePurpose.value;
+    const by = expenseBy.value;
+    const amount = Number(expenseAmount.value) || 0;
     if(!purpose || !by || !amount){ alert("সব তথ্য পূরণ করুন"); return;}
-
     fetch(EXPENSE_API,{
         method:"POST",
         headers:{"Content-Type":"application/json"},
         body:JSON.stringify({purpose, by, amount})
-    }).then(res=>res.json())
-      .then(data=>{
-        alert("খরচ যোগ হয়েছে!");
-        document.getElementById("expensePurpose").value="";
-        document.getElementById("expenseBy").value="";
-        document.getElementById("expenseAmount").value="";
-        backHome();
-    });
+    }).then(()=>{ alert("খরচ যোগ হয়েছে!"); backHome(); });
 }
 
+/* PAGE SHOW */
 function showPage(page){
-    document.getElementById("homeButtons").classList.add("hidden");
+    homeButtons.classList.add("hidden");
     if(page === "donationList"){
-        document.getElementById("donationList").classList.remove("hidden");
+        donationList.classList.remove("hidden");
         loadDonationList();
     }else{
-        document.getElementById("expenseList").classList.remove("hidden");
+        expenseList.classList.remove("hidden");
         loadExpenseList();
     }
 }
 
+/* LOAD TABLE */
 function loadDonationList(){
     fetch(DONATION_API)
     .then(res=>res.json())
     .then(data=>{
-        const table = document.getElementById("donationTable");
-        table.innerHTML = "<tr><th>Name</th><th>Address</th><th>Amount</th></tr>";
+        donationTable.innerHTML =
+            "<tr><th>SL</th><th>Name</th><th>Address</th><th>Amount</th></tr>";
+        let serial = 1;
         let total = 0;
         data.forEach(d=>{
-            const row = table.insertRow();
-            row.insertCell(0).innerText = d.name;
-            row.insertCell(1).innerText = d.phone;
-            row.insertCell(2).innerText = d.amount;
+            const row = donationTable.insertRow();
+            row.insertCell(0).innerText = serial++;
+            row.insertCell(1).innerText = d.name;
+            row.insertCell(2).innerText = d.phone;
+            row.insertCell(3).innerText = d.amount;
             total += Number(d.amount);
         });
-        document.getElementById("totalDonation").innerText = total;
+        totalDonation.innerText = total;
         updateBalance();
     });
 }
@@ -372,39 +298,60 @@ function loadExpenseList(){
     fetch(EXPENSE_API)
     .then(res=>res.json())
     .then(data=>{
-        const table = document.getElementById("expenseTable");
-        table.innerHTML = "<tr><th>Purpose</th><th>By</th><th>Amount</th></tr>";
+        expenseTable.innerHTML =
+            "<tr><th>SL</th><th>Purpose</th><th>By</th><th>Amount</th></tr>";
+        let serial = 1;
         let total = 0;
         data.forEach(d=>{
-            const row = table.insertRow();
-            row.insertCell(0).innerText = d.purpose;
-            row.insertCell(1).innerText = d.by;
-            row.insertCell(2).innerText = d.amount;
+            const row = expenseTable.insertRow();
+            row.insertCell(0).innerText = serial++;
+            row.insertCell(1).innerText = d.purpose;
+            row.insertCell(2).innerText = d.by;
+            row.insertCell(3).innerText = d.amount;
             total += Number(d.amount);
         });
-        document.getElementById("totalExpense").innerText = total;
+        totalExpense.innerText = total;
         updateBalance();
     });
 }
 
+/* TOTAL */
 function loadTotals(){
     Promise.all([
-        fetch(DONATION_API).then(res=>res.json()),
-        fetch(EXPENSE_API).then(res=>res.json())
-    ])
-    .then(([donations, expenses])=>{
-        let totalDonation = donations.reduce((a,b)=>a+Number(b.amount),0);
-        let totalExpense = expenses.reduce((a,b)=>a+Number(b.amount),0);
-        document.getElementById("totalDonation").innerText = totalDonation;
-        document.getElementById("totalExpense").innerText = totalExpense;
+        fetch(DONATION_API).then(r=>r.json()),
+        fetch(EXPENSE_API).then(r=>r.json())
+    ]).then(([donations, expenses])=>{
+        totalDonation.innerText =
+            donations.reduce((a,b)=>a+Number(b.amount),0);
+        totalExpense.innerText =
+            expenses.reduce((a,b)=>a+Number(b.amount),0);
         updateBalance();
     });
 }
-
 function updateBalance(){
-    const totalDonation = Number(document.getElementById("totalDonation").innerText);
-    const totalExpense = Number(document.getElementById("totalExpense").innerText);
-    document.getElementById("balance").innerText = totalDonation - totalExpense;
+    balance.innerText =
+        Number(totalDonation.innerText) - Number(totalExpense.innerText);
+}
+
+/* -------------------------
+   PNG DOWNLOAD FUNCTIONS
+--------------------------- */
+
+function downloadPNG(elementId, filename){
+    const element = document.getElementById(elementId);
+    html2canvas(element,{scale:2}).then(canvas=>{
+        const link = document.createElement("a");
+        link.download = filename + ".png";
+        link.href = canvas.toDataURL("image/png");
+        link.click();
+    });
+}
+
+function downloadDonationPNG(){
+    downloadPNG("donationList", "donation_table");
+}
+function downloadExpensePNG(){
+    downloadPNG("expenseList", "expense_table");
 }
 
 loadTotals();
