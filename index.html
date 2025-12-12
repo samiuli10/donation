@@ -275,7 +275,18 @@ function submitDonation(){
         method:"POST",
         headers:{"Content-Type":"application/json"},
         body:JSON.stringify({name, phone, amount})
-    }).then(()=>{ alert("অনুদান যোগ হয়েছে!"); backHome(); });
+    }).then(()=>{
+        alert("অনুদান যোগ হয়েছে!");
+        // Form stays on the same page; clear the fields and update totals/lists
+        donorName.value = "";
+        donorPhone.value = "";
+        donorAmount.value = "";
+        loadTotals();
+        // If donation list is currently visible, refresh it
+        if(!document.getElementById("donationList").classList.contains("hidden")){
+            loadDonationList();
+        }
+    });
 }
 
 function submitExpense(){
@@ -287,7 +298,18 @@ function submitExpense(){
         method:"POST",
         headers:{"Content-Type":"application/json"},
         body:JSON.stringify({purpose, by, amount})
-    }).then(()=>{ alert("খরচ যোগ হয়েছে!"); backHome(); });
+    }).then(()=>{
+        alert("খরচ যোগ হয়েছে!");
+        // Form stays on the same page; clear the fields and update totals/lists
+        expensePurpose.value = "";
+        expenseBy.value = "";
+        expenseAmount.value = "";
+        loadTotals();
+        // If expense list is currently visible, refresh it
+        if(!document.getElementById("expenseList").classList.contains("hidden")){
+            loadExpenseList();
+        }
+    });
 }
 
 /* PAGE SHOW */
