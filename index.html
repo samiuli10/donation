@@ -269,7 +269,7 @@ function backHome(){
 function submitDonation(){
     const name = donorName.value;
     const phone = donorPhone.value;
-    const amount = Number(donorAmount.value) || 0;
+    const amount = Number(bnToEnNumber(donorAmount.value)) || 0;
     if(!name || !phone || !amount){ alert("সব তথ্য পূরণ করুন"); return;}
     fetch(DONATION_API,{
         method:"POST",
@@ -292,7 +292,7 @@ function submitDonation(){
 function submitExpense(){
     const purpose = expensePurpose.value;
     const by = expenseBy.value;
-    const amount = Number(expenseAmount.value) || 0;
+    const amount = Number(bnToEnNumber(expenseAmount.value)) || 0;
     if(!purpose || !by || !amount){ alert("সব তথ্য পূরণ করুন"); return;}
     fetch(EXPENSE_API,{
         method:"POST",
@@ -310,6 +310,24 @@ function submitExpense(){
             loadExpenseList();
         }
     });
+}
+
+/* Bengali to English number conversion */
+function bnToEnNumber(str){
+    if(typeof str !== 'string') str = String(str);
+    const bn = "০১২৩৪৫৬৭৮৯";
+    const en = "0123456789";
+    let result = "";
+    for(let i=0; i<str.length; i++){
+        const ch = str[i];
+        const idx = bn.indexOf(ch);
+        if(idx > -1){
+            result += en[idx];
+        } else {
+            result += ch;
+        }
+    }
+    return result;
 }
 
 /* PAGE SHOW */
