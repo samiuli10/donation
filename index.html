@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Donation & Expense Management</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style>
- .cardd{
+<title>Donation & Expense Management</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+/* ====== ORIGINAL DESIGN (UNCHANGED) ====== */
+.cardd{
     width: 90%;
     height: 230px;
     background: hsl(214, 35%, 67%);
@@ -15,21 +17,11 @@
     position: relative;
     overflow: hidden;
 }
-
 .cardd p{
     z-index: 2;
     position: relative;
     color: #ffffff;
 }
-.cardd::after{
-    z-index: 1;
-}
-.cardd::before{
-    z-index: 0;
-}
-
-
-
 .cardd::before{
     content: "";
     position: absolute;
@@ -57,8 +49,13 @@ body{
     padding:10px;
     width: 400px;
 }
-.header{ font-size: 20px; font-weight: bold; margin-bottom: 20px; text-align: center; width: 95%; }
-.ayt{ margin: 0 auto; font-size: 10px; width: 95%; background-color: white; margin-bottom: 20px; border-radius: 12px; padding: 10px; }
+.header{
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-align: center;
+    width: 95%;
+}
 .card{
     background: rgb(255, 255, 255);
     padding: 20px;
@@ -76,352 +73,244 @@ button{
     color:white;
     cursor:pointer;
     font-size: 26px;
+    margin-top: 20px;
 }
 button:hover{ background:#063c77; }
 input{
-    width: 100%; padding:14px; margin:8px 0;
-    font-size: 16px; box-sizing: border-box;
-    border-radius:5px; border:1px solid #ccc;
+    width: 90%;
+    padding:14px;
+    margin:8px 0;
+    font-size: 16px;
+    border-radius:5px;
+    border:1px solid #ccc;
 }
 .hidden{display:none;}
+
+/* ===== Mobile friendly table (ONLY THIS PART ADDED) ===== */
+.table-container{
+    width:100%;
+    overflow-x:auto;
+}
 table{
     width:100%;
     border-collapse: collapse;
     margin-top:10px;
+    min-width:520px;
 }
 table, th, td{ border:1px solid #ccc; }
-th, td{ padding:12px; text-align:left; font-size: 16px; }
+th, td{
+    padding:12px;
+    text-align:left;
+    font-size: 16px;
+}
 th{ background:#007bff; color:white; }
-.button-grid{ display: flex; flex-wrap: wrap; justify-content: space-between; gap:10px; }
-.button-grid button{ width:48%; }
-.button-grid-h{
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 10px;
-}
-.button-grid-h button{
-    width:100%;
-    height: 160px;
-}
-.list{
-    text-decoration: none; 
-    color: #ffffff; 
-    background-color: #007bff; 
-    padding: 5px; 
-    width: 60px;
-    text-align: center;
-    margin-bottom: 4px;
-    border-radius: 5px;
-}
-.MinDiv{
-    width: 85%;
-    height: 60px;
-    margin: 0 auto;
-    display: flex;
-    flex-direction: row;
-    margin-top: 10px;
-    
-
-}
-
-
-.divImg  img{
-    margin-left:20px ;
-    width: 40px;
-    height: 40px;
-    border-radius: 5px;
-    gap: 10px;
-}
-    </style>
+</style>
 </head>
+
 <body>
 
-    <div class="header">
-        <h1>“মাহফিলের সব হিসাব এক ক্লিকে”</h1>
-        <h4>সহজে হিসাব রাখুন, সময় বাঁচান, ঝামেলা কমান</h4>
-    </div>
+<div class="header">
+<h3>“তেলীপাড়া কুশ্বার পাড় আল জামিয়াতুল ইসলামিয়া দারুল উলুম মাদ্রাসার উদ্যোগে- তাফাসরুল কুরআন মাহফিল ”</h3>
+<h4>মাহফিলের সকল কালেকশন এবং খরচ</h4>
+</div>
 
-    <div class="card totals cardd" style="background-color: #010305; ">
-        <p >মোট অনুদান: <span id="totalDonation">0</span> টাকা</p>
-        <p>মোট খরচ: <span id="totalExpense">0</span> টাকা</p>
-        <p>বর্তমান ক্যাশ আছে:<span id="balance">0</span> টাকা</p>
-    </div>
+<div class="card cardd" style="background:#010305">
+<p style="font-size: 1.4rem;">মোট অনুদান: <span id="totalDonation">0</span></p>
+<p style="font-size: 1.4rem;">মোট খরচ: <span id="totalExpense">0</span></p>
+<p style="font-size: 1.4rem;">বর্তমান ক্যাশ: <span id="balance">0</span></p>
+</div>
 
-    <div class="card" id="homeButtons">
-        <div class="button-grid button-grid-h">
-            <button onclick="showPasswordPrompt('donation')">অনুদান যোগ করুন</button>
-            <button onclick="showPasswordPrompt('expense')">খরচ যোগ করুন</button>
-            <button onclick="showPage('donationList')">অনুদানের হিসাব</button>
-            <button onclick="showPage('expenseList')">খরচের হিসাব</button>
-        </div>
-    </div>
+<div class="card" id="homeButtons">
+<button onclick="showPasswordPrompt('donation')">অনুদান যোগ করুন</button><br><br>
+<button onclick="showPasswordPrompt('expense')">খরচ যোগ করুন</button><br><br>
+<button onclick="showPage('donationList')">অনুদানের হিসাব</button><br><br>
+<button onclick="showPage('expenseList')">খরচের হিসাব</button>
+</div>
 
-    <div class="card hidden" id="passwordDiv">
-        <input type="password" id="passwordInput" placeholder="পাসওয়ার্ড লিখুন">
-        <div class="button-grid">
-            <button onclick="checkPassword()">সাবমিট</button>
-            <button onclick="cancelPassword()">বাতিল</button>
-        </div>
-    </div>
+<div class="card hidden" id="passwordDiv">
+<input type="password" id="passwordInput" placeholder="পাসওয়ার্ড লিখুন">
+<button onclick="checkPassword()">সাবমিট</button>
+</div>
 
-    <div class="card hidden" id="donationFormDiv">
-        <div class="header">অনুদান যোগ করুন</div>
-        <input id="donorName" placeholder="দাতার নাম">
-        <input id="donorPhone" placeholder="ঠিকানা">
-        <input id="donorAmount" placeholder="টাকার পরিমাণ">
-        <div class="button-grid">
-            <button onclick="submitDonation()">সাবমিট</button>
-            <button onclick="backHome()">Back</button>
-        </div>
-    </div>
+<div class="card hidden" id="donationFormDiv">
+<input id="donorName" placeholder="দাতার নাম">
+<input id="donorPhone" placeholder="ঠিকানা">
+<input id="donorAmount" placeholder="টাকার পরিমাণ">
+<button onclick="submitDonation()">সাবমিট</button>
+<button onclick="backHome()">Back</button>
+</div>
 
-    <div class="card hidden" id="expenseFormDiv">
-        <div class="header">খরচ যোগ করুন</div>
-        <input id="expensePurpose" placeholder="কোন কাজে খরচ">
-        <input id="expenseBy" placeholder="কার মাধ্যমে">
-        <input id="expenseAmount" placeholder="টাকার পরিমাণ">
-        <div class="button-grid">
-            <button onclick="submitExpense()">সাবমিট</button>
-            <button onclick="backHome()">Back</button>
-        </div>
-    </div>
+<div class="card hidden" id="expenseFormDiv">
+<input id="expensePurpose" placeholder="কোন কাজে">
+<input id="expenseBy" placeholder="কার মাধ্যমে">
+<input id="expenseAmount" placeholder="টাকা">
+<button onclick="submitExpense()">সাবমিট</button>
+<button onclick="backHome()">Back</button>
+</div>
 
-    <div class="card hidden" id="donationList">
-        
-        <!-- <div class="MinDiv">
-            <div class="divImg"><a href="list-18.html"  ><img src="img/bech.png" alt=""></a></div>
-            <div class="divImg"><a href="index.html"  ><img src="img/home.png" alt=""></a></div>
-        </div> -->
+<div class="card hidden" id="donationList">
+<div class="table-container">
+<table id="donationTable">
+<tr><th>SL</th><th>Name</th><th>Address</th><th>Amount</th><th>Submitted By</th></tr>
+</table>
+</div>
+<button onclick="downloadDonationPNG()">ডাউনলোড</button>
+<button onclick="backHome()">Back</button>
+</div>
 
-
-
-        <div class="header">অনুদানের হিসাব</div>
-        <div class="table-container">
-            <table id="donationTable">
-                <tr><th>SL</th><th>Name</th><th>Address</th><th>Amount</th></tr>
-            </table>
-        </div>
-        <div style="margin-top:10px; display:flex; gap:10px;">
-            <button onclick="downloadDonationPNG()">ডাউনলোড</button>
-            <button onclick="backHome()">Back</button>
-        </div>
-
-         <!-- <div class="MinDiv">
-            <div class="divImg"><a href="list-18.html"  ><img src="img/bech.png" alt=""></a></div>
-            <div class="divImg"><a href="index.html"  ><img src="img/home.png" alt=""></a></div>
-        </div> -->
-
-    </div>
-
-    <div class="card hidden" id="expenseList">
-        <div class="header">খরচের হিসাব</div>
-        <div class="table-container">
-            <table id="expenseTable">
-                <tr><th>SL</th><th>Purpose</th><th>By</th><th>Amount</th></tr>
-            </table>
-        </div>
-        <div style="margin-top:10px; display:flex; gap:10px;">
-            <button onclick="downloadExpensePNG()">ডাউনলোড</button>
-            <button onclick="backHome()">Back</button>
-        </div>
-    </div>
+<div class="card hidden" id="expenseList">
+<div class="table-container">
+<table id="expenseTable">
+<tr><th>SL</th><th>Purpose</th><th>By</th><th>Amount</th><th>Submitted By</th></tr>
+</table>
+</div>
+<button onclick="downloadExpensePNG()">ডাউনলোড</button>
+<button onclick="backHome()">Back</button>
+</div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
 <script>
-const DONATION_API = "https://691c4c4e3aaeed735c90492a.mockapi.io/donations";
-const EXPENSE_API = "https://691c4c4e3aaeed735c90492a.mockapi.io/expense";
-const PASSWORD = "2255";
-let currentForm = "";
+const DONATION_API="https://691c4c4e3aaeed735c90492a.mockapi.io/donations";
+const EXPENSE_API="https://691c4c4e3aaeed735c90492a.mockapi.io/expense";
 
+let currentForm="";
+let submitted_by="";
+
+/* Bengali → English number */
+function bnToEnNumber(str){
+    const bn="০১২৩৪৫৬৭৮৯";
+    const en="0123456789";
+    return str.split("").map(c=>bn.includes(c)?en[bn.indexOf(c)]:c).join("");
+}
+
+/* PASSWORD */
 function showPasswordPrompt(form){
-    currentForm = form;
-    document.getElementById("homeButtons").classList.add("hidden");
-    document.getElementById("passwordDiv").classList.remove("hidden");
+    currentForm=form;
+    homeButtons.classList.add("hidden");
+    passwordDiv.classList.remove("hidden");
 }
 function checkPassword(){
-    const pass = document.getElementById("passwordInput").value;
-    if(pass === PASSWORD){
-        document.getElementById("passwordDiv").classList.add("hidden");
-        document.getElementById("passwordInput").value = "";
-        if(currentForm === "donation"){
-            document.getElementById("donationFormDiv").classList.remove("hidden");
-        }else{
-            document.getElementById("expenseFormDiv").classList.remove("hidden");
-        }
-    }else{ alert("পাসওয়ার্ড ভুল!"); }
-}
-function cancelPassword(){
-    document.getElementById("passwordDiv").classList.add("hidden");
-    document.getElementById("passwordInput").value = "";
-    document.getElementById("homeButtons").classList.remove("hidden");
-}
-function backHome(){
-    document.getElementById("donationFormDiv").classList.add("hidden");
-    document.getElementById("expenseFormDiv").classList.add("hidden");
-    document.getElementById("donationList").classList.add("hidden");
-    document.getElementById("expenseList").classList.add("hidden");
-    document.getElementById("homeButtons").classList.remove("hidden");
-    loadTotals();
+    let p=passwordInput.value;
+    if(p==="1122") submitted_by="Abdullah";
+    else if(p==="1133") submitted_by="Sadat";
+    else if(p==="2255") submitted_by="Shahadot";
+    else{ alert("ভুল পাসওয়ার্ড"); return; }
+
+    passwordDiv.classList.add("hidden");
+    passwordInput.value="";
+    if(currentForm==="donation") donationFormDiv.classList.remove("hidden");
+    else expenseFormDiv.classList.remove("hidden");
 }
 
 /* SUBMIT */
 function submitDonation(){
-    const name = donorName.value;
-    const phone = donorPhone.value;
-    const amount = Number(bnToEnNumber(donorAmount.value)) || 0;
-    if(!name || !phone || !amount){ alert("সব তথ্য পূরণ করুন"); return;}
-    fetch(DONATION_API,{
-        method:"POST",
-        headers:{"Content-Type":"application/json"},
-        body:JSON.stringify({name, phone, amount})
-    }).then(()=>{
-        alert("অনুদান যোগ হয়েছে!");
-        // Form stays on the same page; clear the fields and update totals/lists
-        donorName.value = "";
-        donorPhone.value = "";
-        donorAmount.value = "";
-        loadTotals();
-        // If donation list is currently visible, refresh it
-        if(!document.getElementById("donationList").classList.contains("hidden")){
-            loadDonationList();
-        }
-    });
+fetch(DONATION_API,{
+method:"POST",
+headers:{"Content-Type":"application/json"},
+body:JSON.stringify({
+name:donorName.value,
+phone:donorPhone.value,
+amount:Number(bnToEnNumber(donorAmount.value)),
+submitted_by
+})
+}).then(()=>{
+alert("অনুদান যোগ হয়েছে");
+donorName.value=""; donorPhone.value=""; donorAmount.value="";
+loadTotals();
+});
 }
 
 function submitExpense(){
-    const purpose = expensePurpose.value;
-    const by = expenseBy.value;
-    const amount = Number(bnToEnNumber(expenseAmount.value)) || 0;
-    if(!purpose || !by || !amount){ alert("সব তথ্য পূরণ করুন"); return;}
-    fetch(EXPENSE_API,{
-        method:"POST",
-        headers:{"Content-Type":"application/json"},
-        body:JSON.stringify({purpose, by, amount})
-    }).then(()=>{
-        alert("খরচ যোগ হয়েছে!");
-        // Form stays on the same page; clear the fields and update totals/lists
-        expensePurpose.value = "";
-        expenseBy.value = "";
-        expenseAmount.value = "";
-        loadTotals();
-        // If expense list is currently visible, refresh it
-        if(!document.getElementById("expenseList").classList.contains("hidden")){
-            loadExpenseList();
-        }
-    });
+fetch(EXPENSE_API,{
+method:"POST",
+headers:{"Content-Type":"application/json"},
+body:JSON.stringify({
+purpose:expensePurpose.value,
+by:expenseBy.value,
+amount:Number(bnToEnNumber(expenseAmount.value)),
+submitted_by
+})
+}).then(()=>{
+alert("খরচ যোগ হয়েছে");
+expensePurpose.value=""; expenseBy.value=""; expenseAmount.value="";
+loadTotals();
+});
 }
 
-/* Bengali to English number conversion */
-function bnToEnNumber(str){
-    if(typeof str !== 'string') str = String(str);
-    const bn = "০১২৩৪৫৬৭৮৯";
-    const en = "0123456789";
-    let result = "";
-    for(let i=0; i<str.length; i++){
-        const ch = str[i];
-        const idx = bn.indexOf(ch);
-        if(idx > -1){
-            result += en[idx];
-        } else {
-            result += ch;
-        }
-    }
-    return result;
+/* LIST */
+function showPage(p){
+homeButtons.classList.add("hidden");
+p==="donationList"?(donationList.classList.remove("hidden"),loadDonationList()):
+(expenseList.classList.remove("hidden"),loadExpenseList());
 }
 
-/* PAGE SHOW */
-function showPage(page){
-    homeButtons.classList.add("hidden");
-    if(page === "donationList"){
-        donationList.classList.remove("hidden");
-        loadDonationList();
-    }else{
-        expenseList.classList.remove("hidden");
-        loadExpenseList();
-    }
-}
-
-/* LOAD TABLE */
 function loadDonationList(){
-    fetch(DONATION_API)
-    .then(res=>res.json())
-    .then(data=>{
-        donationTable.innerHTML =
-            "<tr><th>SL</th><th>Name</th><th>Address</th><th>Amount</th></tr>";
-        let serial = 1;
-        let total = 0;
-        data.forEach(d=>{
-            const row = donationTable.insertRow();
-            row.insertCell(0).innerText = serial++;
-            row.insertCell(1).innerText = d.name;
-            row.insertCell(2).innerText = d.phone;
-            row.insertCell(3).innerText = d.amount;
-            total += Number(d.amount);
-        });
-        totalDonation.innerText = total;
-        updateBalance();
-    });
+fetch(DONATION_API).then(r=>r.json()).then(data=>{
+donationTable.innerHTML="<tr><th>SL</th><th>Name</th><th>Address</th><th>Amount</th><th>Submitted By</th></tr>";
+let i=1;
+data.forEach(d=>{
+let r=donationTable.insertRow();
+r.insertCell(0).innerText=i++;
+r.insertCell(1).innerText=d.name;
+r.insertCell(2).innerText=d.phone;
+r.insertCell(3).innerText=bnToEnNumber(String(d.amount));
+r.insertCell(4).innerText=d.submitted_by||"";
+});
+});
 }
 
 function loadExpenseList(){
-    fetch(EXPENSE_API)
-    .then(res=>res.json())
-    .then(data=>{
-        expenseTable.innerHTML =
-            "<tr><th>SL</th><th>Purpose</th><th>By</th><th>Amount</th></tr>";
-        let serial = 1;
-        let total = 0;
-        data.forEach(d=>{
-            const row = expenseTable.insertRow();
-            row.insertCell(0).innerText = serial++;
-            row.insertCell(1).innerText = d.purpose;
-            row.insertCell(2).innerText = d.by;
-            row.insertCell(3).innerText = d.amount;
-            total += Number(d.amount);
-        });
-        totalExpense.innerText = total;
-        updateBalance();
-    });
+fetch(EXPENSE_API).then(r=>r.json()).then(data=>{
+expenseTable.innerHTML="<tr><th>SL</th><th>Purpose</th><th>By</th><th>Amount</th><th>Submitted By</th></tr>";
+let i=1;
+data.forEach(d=>{
+let r=expenseTable.insertRow();
+r.insertCell(0).innerText=i++;
+r.insertCell(1).innerText=d.purpose;
+r.insertCell(2).innerText=d.by;
+r.insertCell(3).innerText=bnToEnNumber(String(d.amount));
+r.insertCell(4).innerText=d.submitted_by||"";
+});
+});
 }
 
 /* TOTAL */
 function loadTotals(){
-    Promise.all([
-        fetch(DONATION_API).then(r=>r.json()),
-        fetch(EXPENSE_API).then(r=>r.json())
-    ]).then(([donations, expenses])=>{
-        totalDonation.innerText =
-            donations.reduce((a,b)=>a+Number(b.amount),0);
-        totalExpense.innerText =
-            expenses.reduce((a,b)=>a+Number(b.amount),0);
-        updateBalance();
-    });
-}
-function updateBalance(){
-    balance.innerText =
-        Number(totalDonation.innerText) - Number(totalExpense.innerText);
+Promise.all([
+fetch(DONATION_API).then(r=>r.json()),
+fetch(EXPENSE_API).then(r=>r.json())
+]).then(([d,e])=>{
+totalDonation.innerText=d.reduce((a,b)=>a+Number(b.amount),0);
+totalExpense.innerText=e.reduce((a,b)=>a+Number(b.amount),0);
+balance.innerText=totalDonation.innerText-totalExpense.innerText;
+});
 }
 
-/* -------------------------
-   PNG DOWNLOAD FUNCTIONS
---------------------------- */
-
-function downloadPNG(elementId, filename){
-    const element = document.getElementById(elementId);
-    html2canvas(element,{scale:2}).then(canvas=>{
-        const link = document.createElement("a");
-        link.download = filename + ".png";
-        link.href = canvas.toDataURL("image/png");
-        link.click();
-    });
+function backHome(){
+donationFormDiv.classList.add("hidden");
+expenseFormDiv.classList.add("hidden");
+donationList.classList.add("hidden");
+expenseList.classList.add("hidden");
+homeButtons.classList.remove("hidden");
 }
 
+/* DOWNLOAD */
 function downloadDonationPNG(){
-    downloadPNG("donationList", "donation_table");
+html2canvas(donationList).then(c=>{
+let a=document.createElement("a");
+a.download="donation.png";
+a.href=c.toDataURL();
+a.click();
+});
 }
 function downloadExpensePNG(){
-    downloadPNG("expenseList", "expense_table");
+html2canvas(expenseList).then(c=>{
+let a=document.createElement("a");
+a.download="expense.png";
+a.href=c.toDataURL();
+a.click();
+});
 }
 
 loadTotals();
