@@ -89,19 +89,22 @@ input{
 /* ===== Mobile friendly table (ONLY THIS PART ADDED) ===== */
 .table-container{
     width:100%;
-    overflow-x:auto;
+    
+}
+.table-card{
+    padding: 3%;
 }
 table{
     width:100%;
     border-collapse: collapse;
     margin-top:10px;
-    min-width:520px;
+    min-width:100%;
 }
 table, th, td{ border:1px solid #ccc; }
 th, td{
-    padding:12px;
+    padding:5px;
     text-align:left;
-    font-size: 16px;
+    font-size: 14px;
 }
 th{ background:#007bff; color:white; }
 </style>
@@ -148,7 +151,7 @@ th{ background:#007bff; color:white; }
 <button onclick="backHome()">Back</button>
 </div>
 
-<div class="card hidden" id="donationList">
+<div class="card hidden table-card" id="donationList">
 <div class="table-container">
 <table id="donationTable">
 <tr><th>SL</th><th>Name</th><th>Address</th><th>Amount</th><th>Submitted By</th></tr>
@@ -158,10 +161,10 @@ th{ background:#007bff; color:white; }
 <button onclick="backHome()">Back</button>
 </div>
 
-<div class="card hidden" id="expenseList">
+<div class="card hidden table-card" id="expenseList">
 <div class="table-container">
 <table id="expenseTable">
-<tr><th>SL</th><th>Purpose</th><th>By</th><th>Amount</th><th>Submitted By</th></tr>
+<tr><th>SL</th><th>Purpose</th><th>by</th><th>Amount</th><th>Submitted By</th></tr>
 </table>
 </div>
 <button onclick="downloadExpensePNG()">ডাউনলোড</button>
